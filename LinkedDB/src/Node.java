@@ -1,7 +1,6 @@
 public class Node {
 	
-	@SuppressWarnings("null")
-	private int dato = (Integer) null;
+	private int dato = 0;
 	private Node next = null;
 	
 	

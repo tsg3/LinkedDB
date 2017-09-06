@@ -61,7 +61,7 @@ public class LinkedList {
 		return largo;
 	}
 	
-	public void delete(int valor, int pos){
+	public void delete(int pos){
 		
 		
 		if (pos>(largo)){
@@ -69,8 +69,12 @@ public class LinkedList {
 			return;
 		}
 			
+		if (pos == 0) {
+			root = root.getNext();
+			return;
+		}
 		Node current = root;
-		for (int i = 0; i < pos; i++){
+		for (int i = 0; i < pos - 1; i++){
 			current = current.getNext();
 			
 		}
@@ -85,4 +89,36 @@ public class LinkedList {
 		
 	}
 	
+	public void display() {
+        Node current = root;
+        while (current != null) {
+            System.out.println(current.getDato());
+            current = current.getNext();
+        }
+	
+	}    
+	
+	public static void main(String[] args){
+        LinkedList l = new LinkedList();
+        l.add(1);
+        l.add(2);
+        l.add(3);
+        l.display();
+        l.delete(0);
+        System.out.println();
+        l.display();
+        System.out.println();
+        l.add(4);
+        l.add(5);
+        l.add(6);
+
+        l.display();
+        System.out.println();
+        l.delete(4);
+        l.display();
+        
+        
+        
+	}
+        
 }

@@ -95,7 +95,19 @@ public class LinkedList {
             System.out.println(current.getDato());
             current = current.getNext();
         }
-	
+        
+	}
+    public Node find(int valor) {
+        Node current = root;
+        while (current != null) {
+            if (current.getDato()==valor) {
+                return current;
+            } else {
+                current = current.getNext();
+            }
+        }
+        return null;
+    
 	}    
 	
 	public static void main(String[] args){
@@ -116,6 +128,7 @@ public class LinkedList {
         System.out.println();
         l.delete(4);
         l.display();
+        System.out.println(l.find(6));
         
         
         

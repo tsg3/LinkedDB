@@ -4,9 +4,8 @@ public class LinkedList {
 	private int largo;
 	
 	public LinkedList(){
-		this.root=new Node();
-		root.setDato(0);
-		largo = 1;
+		this.root=null;
+		largo = 0;
 	}
 
 	
@@ -16,8 +15,8 @@ public class LinkedList {
 		Node newNode = new Node();
 		newNode.setDato(valor);
 		
-		if (root.getNext()==null){
-			root.setNext(newNode);			
+		if (root==null){
+			root = newNode;			
 		}
 		else{
 			Node current = root;
@@ -90,6 +89,9 @@ public class LinkedList {
 	}
 	
 	public void display() {
+		if(this.root == null){
+			return;
+		}
         Node current = root;
         while (current != null) {
             System.out.println(current.getDato());
@@ -129,9 +131,10 @@ public class LinkedList {
         l.delete(4);
         l.display();
         System.out.println(l.find(6));
-        
-        
-        
+        System.out.println();
+        System.out.println();
+        LinkedList l2 = new LinkedList();
+        l2.display();
 	}
         
 }

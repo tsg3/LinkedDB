@@ -1,13 +1,13 @@
 public class Node {
-	
-	private int dato = 0;
+
+	private Object dato;
 	private Node next = null;
-	
-	
-	public int getDato() {
+
+
+	public Object getDato() {
 		return dato;
 	}
-	public void setDato(int dato) {
+	public void setDato(Object dato) {
 		this.dato = dato;
 	}
 	public Node getNext() {

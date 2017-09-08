@@ -1,6 +1,6 @@
 public class LinkedList {
 
-	private Node root;
+	public Node root;
 	private int largo;
 
 	public LinkedList(){
@@ -10,7 +10,7 @@ public class LinkedList {
 
 
 
-	public void add(int valor){
+	public void add(Object valor){
 
 		Node newNode = new Node();
 		newNode.setDato(valor);
@@ -33,7 +33,7 @@ public class LinkedList {
 
 	}
 
-	public void insert(int valor, int pos){
+	public void insert(Object valor, int pos){
 
 		Node newNode = new Node();
 		newNode.setDato(valor);
@@ -97,7 +97,7 @@ public class LinkedList {
         }
 
 	}
-    public Node find(int valor) {
+    public Node find(Object valor) {
         Node current = root;
         while (current != null) {
             if (current.getDato()==valor) {

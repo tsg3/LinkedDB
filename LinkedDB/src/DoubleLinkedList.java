@@ -9,7 +9,7 @@ public class DoubleLinkedList {
 		this.end=null;
 		largo = 0;
 	}
-	public void add(int valor){
+	public void add(Object valor){
 
 		DoubleNode newDoubleNode = new DoubleNode();
 		newDoubleNode.setDato(valor);
@@ -30,7 +30,7 @@ public class DoubleLinkedList {
 
 	}
 
-	public void insert(int valor, int pos){
+	public void insert(Object valor, int pos){
 
 		DoubleNode newDoubleNode = new DoubleNode();
 		newDoubleNode.setDato(valor);
@@ -67,7 +67,7 @@ public class DoubleLinkedList {
 		return largo;
 	}
 
-	public void delete(int valor, int pos){
+	public void delete(Object valor, int pos){
 		if (pos>=(largo)){
 			System.out.println("Error: Excedió el largo de la lista");
 		}
@@ -110,7 +110,7 @@ public class DoubleLinkedList {
 
 	}
 
-    public DoubleNode find(int valor) {
+    public DoubleNode find(Object valor) {
     	DoubleNode current = start;
         while (current != null) {
             if (current.getDato()==valor) {

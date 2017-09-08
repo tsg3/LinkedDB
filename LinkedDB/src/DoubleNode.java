@@ -1,6 +1,6 @@
 public class DoubleNode {
 
-	private int dato = 0;
+	private Object dato;
 	private DoubleNode next = null;
 	private DoubleNode prev = null;
 
@@ -10,10 +10,10 @@ public class DoubleNode {
 	public void setPrev(DoubleNode prev) {
 		this.prev = prev;
 	}
-	public int getDato() {
+	public Object getDato() {
 		return dato;
 	}
-	public void setDato(int dato) {
+	public void setDato(Object dato) {
 		this.dato = dato;
 	}
 	public DoubleNode getNext() {

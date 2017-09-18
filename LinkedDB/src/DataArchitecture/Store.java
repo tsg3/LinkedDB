@@ -1,11 +1,14 @@
 package DataArchitecture;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
 
 public class Store {
 
-	private Document start;
-	private Document end;
+	public Document start;
+	public Document end;
 	private Store next;
 	private Store prev;
 	private File directorio;
@@ -18,7 +21,7 @@ public class Store {
 		carpeta="";
 	}
 
-	public void add(TypeList types, String type, String ruta, Object[] atributosR){
+	public void add(TypeList types, String type, String ruta, Object[] atributosR) throws IOException, ParseException{
 		if (types.exists(type)) {
 			Document newDocument = new Document();
 			String carpeta = this.carpeta+"\\"+ruta;
@@ -26,6 +29,14 @@ public class Store {
 			newDocument.setDirectorio(directorio);
 			newDocument.setCarpeta(carpeta);
 			newDocument.setNombre(ruta);
+			newDocument.setTipo(type);
+			newDocument.type(type);
+			int n = atributosR.length;
+			int i = 0;
+			while (i<n){
+				newDocument.addObject(types,types.find(type).getAtributosRString()[i],atributosR[i],"Requerido");
+				i++;
+			}
 			if ((start==null) && (end==null)){
 				start=newDocument;
 				end = start;

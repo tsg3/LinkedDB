@@ -3,9 +3,13 @@ package DataArchitecture;
 import java.io.IOException;
 import java.util.Arrays;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class TypeList {
 
@@ -73,11 +77,11 @@ public class TypeList {
 		else{
 			Type current = root;
 			while (current.getNext() != null){
-				current = current.getNext();
 				if (current.getNext().getName().equals(name)){
 					current.setNext(current.getNext().getNext());
 					return;
 				}
+				current = current.getNext();
 			}
 			return;
 		}
@@ -137,33 +141,6 @@ public class TypeList {
         	current=current.getNext();
         }
         return null;
-
-	}
-
-	public static void main(String[] args){
-		String[] atributos = {"Nombre", "Carnet", "Número"};
-		Object[] R = {"", 0};
-		Object[] N = {0};
-		String nombre = "Persona";
-		Object[] valores = {"Esteban",2017097066};
-		StoreList stores = new StoreList();
-		TypeList types = new TypeList(stores);
-		types.add(atributos,R,N,nombre);
-		read(stores);
-		stores.display();
-		System.out.println(types.root.getAtributosRString());
-		//stores.find("Proyecto 1").add(types,"Persona", "Oscar",valores);
-		System.out.println(Arrays.toString(types.root.getAtributosRString()));
-	}
-
-	private static void read(StoreList stores) {
-		File d = new File(stores.getCarpeta());
-		if (d.exists()){
-			String[] listaArchivos=d.list();
-			for(int i=0; i<listaArchivos.length; i++){
-            	stores.add(listaArchivos[i]);
-        	}
-		}
 
 	}
 

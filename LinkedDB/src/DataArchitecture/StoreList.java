@@ -80,13 +80,15 @@ public class StoreList {
 		}
 	}
 
-	public static void read(StoreList stores){
+	public static void read(TypeList types, StoreList stores) throws IOException, ParseException{
 		File d = new File(stores.getCarpeta());
 		if (d.exists()){
 			String[] listaArchivos=d.list();
 			for(int i=0; i<listaArchivos.length; i++){
-            	stores.add(listaArchivos[i]);
+				if (!(listaArchivos[i].substring(listaArchivos[i].length()-5).equals(".json"))){
+					stores.add(listaArchivos[i]);}
         	}
+			stores.readJSONS(types);
 		}
 	}
 
@@ -113,6 +115,14 @@ public class StoreList {
         return null;
 	}
 
+	public void readJSONS(TypeList types) throws IOException, ParseException{
+		Store current = start;
+    	while (current != null) {
+        	readJSON(types, current);
+            current = current.getNext();
+        }
+	}
+
 	public static void readJSON(TypeList types, Store store) throws IOException, ParseException{
 		File d = new File(store.getCarpeta());
 		if (d.exists()){
@@ -122,16 +132,24 @@ public class StoreList {
 				JSONParser jsonParser = new JSONParser();
 				JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
 				String[] atributos = types.find((String) jsonObject.get("Tipo")).getAtributos();
+				String[] requeridos = types.find((String) jsonObject.get("Tipo")).getAtributosRString();
 				int n = atributos.length;
-				Object[] valores = new Object[n];
+				int n2 = requeridos.length;
+				Object[] valores = new Object[n2];
+				Object[] valoresT = new Object[n-n2];
 				int j = 0;
 				while (j<n){
-					if (jsonObject.get(atributos[j])!=null)
-						valores[j] = jsonObject.get(atributos[j]);
+					if (j<n2)
+						valores[j] = jsonObject.get(requeridos[j]);
+					else if (jsonObject.get(atributos[j])!=null)
+						valoresT[j] = jsonObject.get(atributos[j]);
 					j++;
 				}
 				if (jsonObject.get("Requerido")==null)
 					store.add(types,(String)jsonObject.get("Tipo"),listaArchivos[i].substring(0,listaArchivos[i].length()-5),valores);
+				if (valoresT[0]!=null){
+					for (int k=n2; k<n; k++)
+						store.start.addObject(types,atributos[k],valoresT[k-2],"No Requerido");}
         	}
 		}
 	}
@@ -150,39 +168,17 @@ public class StoreList {
 		Object[] N = {0};
 		String nombre = "Persona";
 		Object[] valores = {"Esteban",2017097066};
+		Object[] valores2 = {"Daniel",2008678031};
+		Object[] valores3 = {"Oscar",2008699931};
 		StoreList stores = new StoreList();
 		TypeList types = new TypeList(stores);
 		types.add(atributos,R,N,nombre);
-		read(stores);
+		read(types, stores);
 		stores.display();
-		/*stores.find("Proyecto 1").add(types,nombre,"Esteban",valores);
-		System.out.println(stores.find("Proyecto 1").start.getCarpeta());
-		System.out.println(stores.find("Proyecto 1").start.getAtributos());
-		stores.find("Proyecto 1").start.addObject(types,"Nombre","Daniel","Requerido");
-		System.out.println(stores.find("Proyecto 1").start.getAtributos());
-		stores.find("Proyecto 1").start.display();
-		System.out.println(stores.find("Proyecto 1").start.exists("Numero"));
-		System.out.println(stores.find("Proyecto 1").start.find("Nombre"));
-		stores.find("Proyecto 1").start.write();*/
-		readJSON(types,stores.find("Proyecto 1"));
-
-		/*File d = new File(stores.find("Proyecto 1").getCarpeta());
-		String[] listaArchivos=d.list();
-		FileReader reader = new FileReader(stores.find("Proyecto 1").getCarpeta()+"\\"+listaArchivos[0]);
-		JSONParser jsonParser = new JSONParser();
-		JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
-		String[] atributos2 = types.find((String) jsonObject.get("Tipo")).getAtributos();
-		int n = atributos.length;
-		Object[] valores2 = new Object[n];
-		int j = 0;
-		while (j<n){
-			if (jsonObject.get(atributos[j])!=null)
-				valores[j] = jsonObject.get(atributos2[j]);
-			j++;
-		}
-		if (jsonObject.get("Requerido")==null)
-			store.add(types,(String)jsonObject.get("Tipo"),listaArchivos[i],valores);
-		System.out.println(listaArchivos[0].substring(0,listaArchivos[0].length()-5));*/
-
+		stores.find("Proyecto 1").add(types,nombre,"Oscar",valores3);
+		//stores.find("Proyecto 1").add(types,nombre,"Daniel",valores2);
+		//stores.find("Proyecto 1").write();
+		stores.find("Proyecto 1").display();
+		types.display();
 	}
 }

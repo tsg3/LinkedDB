@@ -40,17 +40,100 @@ public class Store {
 			if ((start==null) && (end==null)){
 				start=newDocument;
 				end = start;
+				start.setNext(end);
+				start.setPrev(end);
+				end.setNext(start);
+				end.setPrev(start);
 			}
 			else{
 				Document current = end;
 				current.setNext(newDocument);
 				newDocument.setPrev(current);
 				end = newDocument;
+				end.setNext(start);
+				start.setPrev(end);
 			}
 		}
 		else {
 			System.out.println("No existe" + type);
 		}
+	}
+
+	public void delete(String name){
+		if (start.getNombre().equals(name)){
+			Document exStart = start;
+			start = start.getNext();
+			exStart.setNext(null);
+			exStart.setPrev(null);
+			start.setPrev(end);
+			end.setNext(start);
+		}
+		else if (end.getNombre().equals(name)){
+			Document newEnd = end.getPrev();
+			end.setPrev(null);
+			end.setNext(null);
+			end=newEnd;
+			end.setNext(start);
+			start.setPrev(end);
+		}
+		else{
+			Document current = start;
+			while (current.getNext() != null){
+				if (current.getNext().getNombre().equals(name)){
+					Document deleting = current.getNext();
+					current.setNext(current.getNext().getNext());
+					deleting.setNext(null);
+					deleting.setPrev(null);
+					return;
+				}
+				current = current.getNext();
+			}
+			return;
+		}
+	}
+
+	public void display() {
+		if((this.start == null)&&(this.end == null)){
+			return;
+		}
+        Document current = start;
+        do {
+        	System.out.println(current.getNombre());
+            current.display();
+            System.out.println("---------------------------------------");
+            current = current.getNext();
+        } while (current != start);
+
+	}
+
+	public Document find(String name) {
+    	Document current = start;
+        while (current != null) {
+            if (current.getNombre().equals(name)) {
+                return current;
+            } else {
+                current = current.getNext();
+            }
+        }
+        return null;
+	}
+	public boolean exists(String name) {
+    	Document current = start;
+        while (current != null) {
+            if (current.getNombre().equals(name)) {
+                return true;
+            } else {
+                current = current.getNext();
+            }
+        }
+        return false;
+	}
+	public void write() {
+    	Document current = start;
+        do {
+            current.write();
+            current=current.getNext();
+        } while (current != start);
 	}
 
 	public Store getNext() {

@@ -10,14 +10,20 @@ import org.json.simple.parser.ParseException;
 
 public class StoreList {
 
-	private Store start;
-	private Store end;
-	private String carpeta;
+	public Store start;
+	public Store end;
+	public String carpeta;
 
 	public StoreList(){
 		this.start=null;
 		this.end=null;
-		carpeta="C:\\Users\\este0\\Desktop\\Pruebas";
+		File miDir = new File (".");
+		try {
+			carpeta=miDir.getCanonicalPath();
+		}
+		    catch(Exception e) {
+		    e.printStackTrace();
+		}
 	}
 
 	public void add(String ruta){
@@ -96,9 +102,20 @@ public class StoreList {
 		if(this.start==null){
 			return;
 		}
+		File d = new File(carpeta);
+		String[] listaArchivos=d.list();
+		for(int i=0; i<listaArchivos.length; i++){
+			File a = new File(carpeta+"\\"+listaArchivos[i]);
+			if (a.delete())
+				 System.out.println("El fichero " + listaArchivos[i] + " ha sido borrado correctamente");
+				else
+				 System.out.println("El fichero " + listaArchivos[i] + " no se ha podido borrar");
+
+		}
 		Store current = start;
 		while (current != null) {
-            current.getDirectorio().mkdir();
+            current.getDirectorio().mkdirs();
+            current.write();
             current=current.getNext();
 		}
 	}
@@ -116,6 +133,11 @@ public class StoreList {
 	}
 
 	public void readJSONS(TypeList types) throws IOException, ParseException{
+		File d = new File(carpeta);
+		String[] listaArchivos=d.list();
+		for(int i=0; i<listaArchivos.length; i++){
+			add(listaArchivos[i]);
+		}
 		Store current = start;
     	while (current != null) {
         	readJSON(types, current);
@@ -160,25 +182,5 @@ public class StoreList {
 
 	public void setCarpeta(String carpeta) {
 		this.carpeta = carpeta;
-	}
-
-	public static void main(String[] args) throws IOException, ParseException{
-		String[] atributos = {"Nombre", "Carnet", "Número"};
-		Object[] R = {"", 0};
-		Object[] N = {0};
-		String nombre = "Persona";
-		//Object[] valores = {"Esteban",2017097066};
-		//Object[] valores2 = {"Daniel",2008678031};
-		Object[] valores3 = {"Oscar",2008699931};
-		StoreList stores = new StoreList();
-		TypeList types = new TypeList(stores);
-		types.add(atributos,R,N,nombre);
-		read(types, stores);
-		stores.display();
-		stores.find("Proyecto 1").add(types,nombre,"Oscar",valores3);
-		//stores.find("Proyecto 1").add(types,nombre,"Daniel",valores2);
-		//stores.find("Proyecto 1").write();
-		stores.find("Proyecto 1").display();
-		types.display();
 	}
 }

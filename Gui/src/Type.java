@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 
 public class Type {
 
-	private String name;
+	public String name;
 	private String archivo;
 	private String[] atributosRString;
 	private JSONObject atributosR;

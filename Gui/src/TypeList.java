@@ -16,6 +16,10 @@ public class TypeList {
 		this.root=null;
 		this.carpeta=store.getCarpeta();
 	}
+	public TypeList(String name){
+		this.root=null;
+		this.carpeta=name;
+	}
 
 	@SuppressWarnings("unchecked")
 	public void add(String[] atributos, Object[] valoresRequeridos, Object[] valoresNoRequeridos, String nombre){

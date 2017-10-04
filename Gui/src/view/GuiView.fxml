@@ -5,13 +5,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interfaz">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Nuevo Tipo" />
+                  <MenuItem fx:id="crear_ventana" mnemonicParsing="false" onAction="#segunda_ventana" text="Nuevo Tipo" />
+                  <MenuItem fx:id="ver_tipos" mnemonicParsing="false" onAction="#tipos" text="Ver Tipos" />
             </items>
           </Menu>
         </menus>

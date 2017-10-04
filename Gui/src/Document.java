@@ -9,7 +9,7 @@ import org.json.simple.parser.ParseException;
 
 public class Document {
 
-	private DocumentObject root;
+	public DocumentObject root;
 	private Document next = null;
 	private Document prev = null;
 	private File Directorio;
